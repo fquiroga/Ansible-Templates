@@ -1,0 +1,16 @@
+---
+- hosts: boxes
+  connection: local
+  gather_facts: no 
+   
+  tasks: 
+   - name: Replace Configs
+     napalm_install_config:
+#        provider: "{{ creds }}"
+        dev_os: ios
+        config_file: rtr1.txt
+        commit_changes: True
+        replace_config: False 
+        diff_file: DIFFS/{{ inventory_hostname }}.txt
+        optional_args: {'port':"2222"}
+        

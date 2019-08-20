@@ -1,0 +1,189 @@
+version 16.9
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname rtr1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no logging console
+enable secret 5 $1$nqA3$c92buyo/OMVW.aaWkS7gE1
+enable password cisco
+!
+aaa new-model
+!
+!
+aaa authentication login default local
+aaa authorization exec default local
+!
+!
+!
+!
+!
+aaa session-id common
+!
+!
+!
+!
+!
+!
+!
+ip domain name {{ item.domain }}
+!
+!
+!
+login on-success log
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+!
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-3621877726
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-3621877726
+ revocation-check none
+ rsakeypair TP-self-signed-3621877726
+!
+!
+crypto pki certificate chain TP-self-signed-3621877726
+ certificate self-signed 01
+  30820330 30820218 A0030201 02020101 300D0609 2A864886 F70D0101 05050030
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 33363231 38373737 3236301E 170D3139 30373235 30353336
+  30365A17 0D333030 31303130 30303030 305A3031 312F302D 06035504 03132649
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D33 36323138
+  37373732 36308201 22300D06 092A8648 86F70D01 01010500 0382010F 00308201
+  0A028201 0100BF0F C85703BF 9BED7CE2 DDD682DA 0FF6CFE0 A61A0DC9 E0A26D08
+  AF0F2472 41FB8C51 970004C9 5033E7E6 0283555D 895CB1D0 943091C3 FE3568B9
+  AF65E2B7 8346E1D0 33F6C78A 08A75BF4 F32730B6 37119D4E 46B71B4B 2D50D658
+  17CB42B0 5855CC0C 7A2B61B0 0C791D2B 8A55860A BC30C33C 923BB2A3 56E9D085
+  4DFF39CB 3A927FB3 7CF01179 071F6FB9 573893A6 92DB0A87 5CDBA4F9 48E7ED50
+  09F8A4C6 216A568C F802DE33 A8B6CB12 EABAB646 E40A68CC 1A7813F7 6F143610
+  3BCD2245 4DB518FB 043F2CEF DEF0F4E0 819773E5 761DFFD7 615CF55F 5655A4EC
+  1E8E2397 7DC848B0 AA57E42B 166F6524 AC007951 78379D13 DA7C742F 1BB03B5E
+  8A2E3306 4F4B0203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF
+  301F0603 551D2304 18301680 14242544 48B8786C 7B7FD079 D0F0799D 6CF693E3
+  CD301D06 03551D0E 04160414 24254448 B8786C7B 7FD079D0 F0799D6C F693E3CD
+  300D0609 2A864886 F70D0101 05050003 82010100 0412693D CA0A91FD 65A54FAB
+  DF6EE902 A2A7DBC6 7B59DB43 8CCD7826 FA225949 535E082F CC48729B 0F09DA01
+  5E6D9EE5 00667471 29496618 A5CF2FDB BBF7E73B CE224745 ED273940 DDB3E961
+  9CB20CF5 F5487482 3B66562D E07F7AA5 E5564A4B 0DFB9B52 9F561CFF D09D09EC
+  6E00C9B1 8A515C69 9A67F005 EF686A5C 0BA48E6C CBE114F5 9D6526C5 BE4B2572
+  992995B4 5E86258F 15E976FB 8F8B8F29 0B4DDFC9 079B1A7D 0AB9E5BE 25BF2C58
+  2D47DA08 7683A5CC C472A7B9 FCCB7C32 7D7E4244 E1518F03 38A785BE D44472D5
+  7B58E451 D8AB1C94 051CF4D1 8C19EDA8 CE10A787 ECAF47A5 160640C6 03F38F7C
+  5DDFC5EC 5EFA9FD3 303F63CF E43CFE7E A96441A2
+        quit
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9IRH5QMFIME
+no license smart enable
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+archive
+ path bootflash:
+!
+netconf-yang
+!
+restconf
+!
+username vagrant privilege 15 password 0 vagrant
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet1
+ ip address {{ item.ipEth1 }} {{ item.netmask }}
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+ip forward-protocol nd
+no ip http server
+no ip http secure-server
+ip http client source-interface GigabitEthernet1
+ip tftp source-interface GigabitEthernet1
+!
+ip ssh pubkey-chain
+  username vagrant
+   key-hash ssh-rsa DD3BB82E850406E9ABFFA80AC0046ED6
+ip scp server enable
+!
+!
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+banner exec ^CC*** Cisco csr1000v / 0.0.1 / Templating test ***^C
+banner login ^CC
+*********************
+*  AT&T Autotmation *
+*********************
+^C
+!
+line con 0
+ stopbits 1
+line vty 5 15
+ transport input ssh
+!
+!
+!
+!
+!
+!
+end
+

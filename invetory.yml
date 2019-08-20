@@ -1,0 +1,19 @@
+---
+#Yaml Format
+all:
+ children: 
+  boxes:
+     hosts:
+        rtr1:
+          ansible_host: 127.0.0.1
+          ansible_port: 2222
+        rtr2:
+          ansible_host: 127.0.0.1
+          ansible_port: 2223
+   
+   switches: 
+     hosts: 
+        SW1: 
+         ansible_host: 192.168.10.1 
+        SW2:
+         ansible_host: sw2.mylab.net 

@@ -1,0 +1,6 @@
+---
+- name: Generate Device configuration file through Template
+  hosts: localhost 
+
+  roles:
+   - test-boxes

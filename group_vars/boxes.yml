@@ -1,0 +1,12 @@
+---
+ansible_ssh_user: vagrant
+ansible_ssh_pass: vagrant
+ansible_network_os: ios
+ansible_become: yes
+ansible_become_method: enable
+ansible_become_password: vagrant
+dev_os: ios
+commands:
+  - "show ip route"
+  - "show ip interface brief"
+  - "show inventory"

@@ -1,0 +1,9 @@
+--- 
+boxes:
+  - hostname: rtr1
+    ipEth1: 10.0.2.15
+    netmask: 255.255.255.0
+    domain: ansible-template.net
+
+
+
